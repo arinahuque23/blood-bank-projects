@@ -6,8 +6,16 @@ import { useContext } from "react";
 // import { AuthContext } from "../../../Providers/AuthProvider/AuthProvider";
 // import "./Navbar.css";
 import { AuthContext } from "../../../Provider/AuthProvider";
+
+
+
 const Navbar = () => {
   const { user, logOut, loading } = useContext(AuthContext);
+ 
+  //tanstact 
+  
+ 
+ 
   const handleLogOut = () => {
     logOut()
       .then(() => {})
@@ -27,28 +35,14 @@ const Navbar = () => {
       <li>
         <Link className=" hover:text-red-300" to="/blog"> Blog </Link>
       </li>
-      <li  tabIndex={0}>
-          <summary className=" hover:text-red-300" >Dashbord</summary>
-          {/* <ul className="p-2 text-black">
-            <li>
-              {" "}
-              <Link to="/manageservices"> </Link>
-            </li>
-            <li>
-              {" "}
-              <Link to="/addService"> Add-Serivces </Link>
-            </li>
-            <li>
-              {" "}
-              <Link to="/mySchedules"> My-Schedules </Link>
-            </li>
-          </ul> */}
-      
-      </li>
+     
       
       <li>
-        <Link to=""></Link>
-      </li>
+            <Link to="/dashboard/cart" className="">
+            Dashbord  <button>+0</button>
+            </Link>
+        </li>
+
       {user?.email ? (
         <li>
           <button onClick={handleLogOut}>Log Out</button>
