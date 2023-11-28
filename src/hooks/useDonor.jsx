@@ -2,12 +2,14 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import useAuth from "./useAuth";
+
 import useAxiosSecure from "./useAxiosSecure";
+import { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const useDonor = () => {
     const axiosSecure = useAxiosSecure();
-    const { user} = useAuth();
+    const { user} = useContext(AuthContext);
     const { refetch, data: donor = [] } = useQuery({
         queryKey: ['donor', user?.email],
         queryFn: async() => {

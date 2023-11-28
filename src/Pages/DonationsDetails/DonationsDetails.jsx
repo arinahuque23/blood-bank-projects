@@ -7,6 +7,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { useContext } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useDonor from "../../hooks/useDonor";
 
 const DonationsDetails = () => {
   const { user } = useContext(AuthContext);
@@ -14,6 +15,7 @@ const DonationsDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const axiosSecure = useAxiosSecure();
+  const [, refetch] = useDonor();
   
   const {
     _id,
@@ -59,6 +61,7 @@ const DonationsDetails = () => {
             timer: 1500,
           });
           // refetch cart to update the cart items count
+          refetch();
           
         }
       });

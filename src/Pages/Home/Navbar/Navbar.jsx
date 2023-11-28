@@ -6,14 +6,15 @@ import { useContext } from "react";
 // import { AuthContext } from "../../../Providers/AuthProvider/AuthProvider";
 // import "./Navbar.css";
 import { AuthContext } from "../../../Provider/AuthProvider";
-
+import useDonor from "../../../hooks/useDonor";
+// import  {useDonor}  from "../../../hooks/useDonor";
 
 
 const Navbar = () => {
   const { user, logOut, loading } = useContext(AuthContext);
  
   //tanstact 
-  
+  const [donor] = useDonor();
  
  
   const handleLogOut = () => {
@@ -39,7 +40,7 @@ const Navbar = () => {
       
       <li>
             <Link to="/dashboard/cart" className="">
-            Dashbord  <button>+0</button>
+            Dashbord  <button className="text-red-400">+{donor.length}</button>
             </Link>
         </li>
 
@@ -49,7 +50,7 @@ const Navbar = () => {
         </li>
       ) : (
         <li>
-          <Link to="/login">Login</Link>{" "}
+          <Link to="/login">Login</Link>
         </li>
       )}
     </>
@@ -84,13 +85,13 @@ const Navbar = () => {
             </ul>
           </div>
           <Link to="/">
-            <div className="flex  pl-4 mb-2">
-              <img className="lg:w-[6vh] lg:mt-4 w-[7vh] mt-4 " src={logo} alt="" />
-              <h2 className="mt-6 pl-2 text-xl text-red-400 font-serif">Save-Life</h2>
+            <div className="flex   pl-4 mb-2">
+              <img className="lg:w-[6vh] lg:mt-4 w-[7vh]   mt-4 " src={logo} alt="" />
+              <button className="btn mt-4 ml-4 text-red-500">Save-Life</button>
             </div>
           </Link>
         </div>
-        <div className="navbar-center hidden lg:flex">
+        <div className="navbar-center hidden md:flex md:ml-[10vh] lg:flex">
           <ul className="menu menu-horizontal px-1 text-xl ">{navItems}</ul>
         </div>
         <div className="navbar-end pr-4 text-black">
