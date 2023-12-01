@@ -66,6 +66,16 @@ const DonationReq = () => {
                           </div>
                         </div>
                       </div>
+                      reqname
+reqemail
+recipient
+upazila
+district
+hospital
+address
+date
+time
+status
                       
                          </div> */}
           <div>
@@ -94,25 +104,25 @@ const DonationReq = () => {
                                         href="javascript:void(0)"
                                         className="mb-1 font-semibold transition-colors duration-200 ease-in-out  text-secondary-inverse hover:text-primary"
                                       >
-                                        {data.requester_name}
+                                        {data.reqname}
                                       </a>
                                     </div>
                                   </div>
                                 </td>
                                 <td className="p-3 pr-0  lg:pl-[19vh]">
                                   <span className="font-semibold text-light-inverse text-md/normal">
-                                    {data.full_address}
+                                    {data.address}
                                   </span>
                                 </td>
 
                                 <td className="p-3 lg:pr-[10vh]">
                                   <span className="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-primary bg-primary-light rounded-lg">
-                                    {data.donation_date}
+                                    {data.date}
                                   </span>
                                 </td>
                                 <td className=" lg:pr-12">
                                   <span className="font-semibold text-light-inverse text-md/normal">
-                                    {data.donation_time}
+                                    {data.time}
                                   </span>
                                 </td>
                                 <td className="p-3 pr-0 text-end">

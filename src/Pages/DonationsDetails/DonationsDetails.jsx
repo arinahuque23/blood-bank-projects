@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 
 import { Helmet } from "react-helmet-async";
-import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useContext } from "react";
 import Swal from "sweetalert2";
@@ -16,23 +16,21 @@ const DonationsDetails = () => {
   const location = useLocation();
   const axiosSecure = useAxiosSecure();
   const [, refetch] = useDonor();
-  
+
   const {
     _id,
-    donation_date,
-    donation_time,
-    full_address,
-    hpspital_name,
+    reqname,
+    reqemail,
+    recipient,
+    upazila,
+    district,
+    hospital,
+    address,
+    date,
+    time,
     massage,
-    recipient_name,
-    recipient_district,
-    recipient_upazila,
-    requester_email,
-    requester_name,
     status,
   } = viewdetails;
-
- 
 
   //extra
   const handleDonationConfirm = (event) => {
@@ -47,24 +45,24 @@ const DonationsDetails = () => {
         email: email,
         donorid: _id,
       };
-      
-      axiosSecure.post('/donors', donate)
-     
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.insertedId) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Thanks For Donating",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          // refetch cart to update the cart items count
-          refetch();
-          
-        }
-      });
+
+      axiosSecure
+        .post("/donors", donate)
+
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.insertedId) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Thanks For Donating",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            // refetch cart to update the cart items count
+            refetch();
+          }
+        });
     } else {
       Swal.fire({
         title: "You are not Logged In",
@@ -74,15 +72,13 @@ const DonationsDetails = () => {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, login!",
-      })
-      .then((result) => {
+      }).then((result) => {
         if (result.isConfirmed) {
           //   send the user to the login page
-        navigate("/login", { state: { from: location } });
+          navigate("/login", { state: { from: location } });
         }
       });
     }
-   
   };
 
   return (
@@ -93,29 +89,39 @@ const DonationsDetails = () => {
       <div>
         <div className="m-12 bg-red-500 lg:max-w-[450px] lg:mx-[69vh] rounded-xl hover:bg-blue-800 hover:scale-110 duration-700 p-5">
           <p className="text-base leading-7 text-white font-semibold space-y-4">
-            Requester: {requester_name}
+            Requester: {reqname}
           </p>
-          <h4 className="py-2 text-white font-bold">
-            Mail : {requester_email}
-          </h4>
+          <h4 className="py-2 text-white font-bold">Mail : {reqemail}</h4>
           <p className="text-sm leading-7 text-slate-300 space-y-4">
-            Recipient Name : {recipient_name}
+            Recipient Name : {recipient}
           </p>
           <div className="flex gap-6 text-white">
-            <p> District : {recipient_district}</p>
-            <p> Upazila : {recipient_upazila}</p>
+            <p> District : {district}</p>
+            <p> Upazila : {upazila}</p>
           </div>
           <div className="flex gap-6 text-white">
-            <p>Donation Time :{donation_time} </p>
-            <p>Donation Date : {donation_date}</p>
+            <p>Donation Time :{time} </p>
+            <p>Donation Date : {date}</p>
           </div>
           <div className="text-white">
-            <p> Address : {full_address}</p>
-            <p>Hospital : {hpspital_name}</p>
+            <p> Address : {address}</p>
+            <p>Hospital : {hospital}</p>
           </div>
           <div className="text-white">
             <p>Massage : {massage}</p>
-            <p>Status : {status} . </p>
+            <div> 
+              <p className="mr-3">
+      Status : <br />
+              <select className=" mr-3 select select-bordered text-black w-full max-w-xs">
+                <option disabled selected>
+                  {status}
+                </option>
+                <option disabled>In Prograss</option>
+                <option disabled>Done</option>
+                <option disabled > <Link to="/">canceled</Link> </option>
+              </select>
+              </p>
+            </div>
           </div>
 
           <div className="pt-5 pb-2 flex justify-center">
@@ -178,16 +184,10 @@ const DonationsDetails = () => {
                 </form> */}
               </dialog>
             </div>
-          
-            
-
-          
           </div>
         </div>
-      
       </div>
     </div>
-  
   );
 };
 
