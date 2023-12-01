@@ -1,8 +1,6 @@
-# React + Vite
+# Projects Name : SAVE-LIFE 
+#  Assignment Category: assignment12_category_0000
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
-
-<!-- - admin email@ : arina28@gmail.com
-- admin pass : 123Arina -->
+- admin email@ : arina28@gmail.com
+- admin pass : 123Arina 
