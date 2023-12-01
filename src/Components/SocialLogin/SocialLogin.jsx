@@ -1,7 +1,8 @@
-import { FaGoogle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-import { useNavigate } from "react-router-dom";
+import { FaGoogle } from "react-icons/fa";
+
 
 
 const SocialLogin = () => {
@@ -12,7 +13,6 @@ const SocialLogin = () => {
     const handleGoogleSignIn = () =>{
         googleSignIn()
         .then(result =>{
-            console.log(result.user);
             const userInfo = {
                 email: result.user?.email,
                 name: result.user?.displayName
@@ -26,12 +26,12 @@ const SocialLogin = () => {
     }
 
     return (
-        <div className="p-5">
+        <div className="p-8">
             <div className="divider"></div>
             <div>
-                <button onClick={handleGoogleSignIn} className=" mx-[17vh]">
-                    <FaGoogle className="mr-6 mb-4"></FaGoogle>
-                   
+                <button onClick={handleGoogleSignIn} className="btn">
+                    <FaGoogle className="mr-2"></FaGoogle>
+                    Google
                 </button>
             </div>
         </div>

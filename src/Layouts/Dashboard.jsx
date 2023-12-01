@@ -1,85 +1,87 @@
-import { FaAd, FaBook, FaCalendar, FaEnvelope, FaHome, FaList, FaSearch, FaShoppingCart, FaUsers, FaUtensils } from "react-icons/fa";
+/* eslint-disable no-unused-vars */
+import { FaAd, FaBlog, FaBook, FaCalendar, FaEnvelope, FaHome, FaList, FaSearch, FaShoppingCart, FaUsers, FaUtensils } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
-import useCart from "../hooks/useCart";
+import useDonor from "../hooks/useDonor";
+import useAdmin from "../hooks/useAdmin";
+// import useCart from "../hooks/useCart";
 // import useAdmin from "../hooks/useAdmin";
 
 
 const Dashboard = () => {
-    const [cart] = useCart();
+    const [donor] = useDonor()
 
     // TODO: get isAdmin value from the database
-//     const [isAdmin] = useAdmin();
+    const [isAdmin] = useAdmin();
 
     return (
         <div className="flex">
             {/* dashboard side bar */}
-            <div className="w-64 min-h-screen bg-orange-400">
+            <div className="w-64 min-h-screen bg-red-400">
                 <ul className="menu p-4">
-                    {/* {
-                        isAdmin ? <> */}
+                     {
+                        isAdmin ? <> 
                             <li>
                                 <NavLink to="/dashboard/adminHome">
                                     <FaHome></FaHome>
                                     Admin Home</NavLink>
-                            </li>
+                            </li> 
                             <li>
-                                <NavLink to="/dashboard/addItems">
+                                <NavLink to="/dashboard/addDonation">
                                     <FaUtensils></FaUtensils>
-                                    Add Items</NavLink>
+                                    Add Donation</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/dashboard/manageItems">
+                                <NavLink to="/dashboard/manageDonation">
                                     <FaList></FaList>
-                                    Manage Items</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/bookings">
-                                    <FaBook></FaBook>
-                                    Manage Bookings</NavLink>
+                                    Manage Donation</NavLink>
                             </li>
                             <li>
                                 <NavLink to="/dashboard/users">
                                     <FaUsers></FaUsers>
-                                    All Users</NavLink>
+                                    All Users </NavLink>
                             </li>
-                        {/* </> */}
-                            {/* : */}
+                            <li>
+                                <NavLink className="mt-2" to="/">
+                                    <FaBlog></FaBlog>
+                                    All Blood Donation Request </NavLink>
+                            </li>
+                            <li>
+                                <NavLink className="mt-2"
+                                 to="/">
+                                    <FaBook></FaBook>
+                                    Conatent Management  </NavLink>
+                            </li>
+                        </> 
+                            : 
                             <>
                                 <li>
-                                    <NavLink to="/dashboard/userHome">
+                                    <NavLink to="/dashboard/donation">
                                         <FaHome></FaHome>
                                         User Home</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/dashboard/reservation">
-                                        <FaCalendar></FaCalendar>
-                                        Reservation</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/dashboard/cart">
-                                        <FaShoppingCart></FaShoppingCart>
-                                        My Cart ({cart.length})</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/dashboard/review">
+                                </li> 
+                               
+                                
+
+                                 <li>
+                                    <NavLink to="/dashboard/createDonation">
                                         <FaAd></FaAd>
-                                        Add a Review</NavLink>
+                                        Create Donation Request</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/dashboard/bookings">
+                                    <NavLink to="/dashboard/donationRequest">
                                         <FaList></FaList>
-                                        My Bookings</NavLink>
+                                        My Donation Request</NavLink>
                                 </li>
                             </>
-                    {/* } */}
+                     } 
                     {/* shared nav links */}
                     <div className="divider"></div>
-                    <li>
+                   <li>
                         <NavLink to="/">
                             <FaHome></FaHome>
                             Home</NavLink>
                     </li>
-                    <li>
+                    {/*  <li>
                         <NavLink to="/order/salad">
                             <FaSearch></FaSearch>
                             Menu</NavLink>
@@ -88,7 +90,7 @@ const Dashboard = () => {
                         <NavLink to="/order/contact">
                             <FaEnvelope></FaEnvelope>
                             Contact</NavLink>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
             {/* dashboard content */}

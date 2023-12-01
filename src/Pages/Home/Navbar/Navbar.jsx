@@ -39,7 +39,7 @@ const Navbar = () => {
      
       
       <li>
-            <Link to="/dashboard/cart" className="">
+            <Link to="/dashboard/donation" className="">
             Dashbord  <button className="text-red-400">+{donor.length}</button>
             </Link>
         </li>

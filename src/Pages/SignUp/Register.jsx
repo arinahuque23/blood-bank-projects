@@ -5,8 +5,11 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 
 const Register = () => {
+  const axiosPublic = useAxiosPublic();
   const {
     register,
     handleSubmit,
@@ -23,18 +26,28 @@ const Register = () => {
       console.log(loggedUser);
       updateUserProfile(data.name, data.photoURL, data.blood, data.district)
         .then(() => {
-          console.log("user profile info updated");
-          reset();
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "User created successfully.",
-            showConfirmButton: false,
-            timer: 1500,
+          // create user entry in the database
+          const userInfo = {
+            name: data.name,
+            email: data.email,
+            blood: data.blood,
+          };
+          axiosPublic.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log("user added to the database");
+              reset();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "User created successfully.",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              navigate("/");
+            }
           });
-          navigate("/");
-          location.reload()
         })
+
         .catch((error) => console.log(error));
     });
   };
@@ -81,6 +94,7 @@ const Register = () => {
                   </label>
                   <input
                     type="text"
+                    name="photo"
                     {...register("photoURL", { required: true })}
                     placeholder="Photo URL"
                     className="input input-bordered"
@@ -112,18 +126,20 @@ const Register = () => {
                     <span className="label-text">Blood Group</span>
                   </label>
 
-                  {/* <select className="select select-bordered w-full max-w-xs"> */}
-                    {/* <input
-                      type="text"
-                      // {...register("blood", { required: true })}
-                      name="blood"
-                      placeholder="blood"
-                      className="input input-bordered"
-                    /> */}
-                     <select className="input input-bordered" {...register("blood")}>
-                    <option value="a">a</option>
-                    <option value="b">b</option>
+                  <select
+                    className="input input-bordered"
+                    name="blood"
+                    placeholder="blood"
+                    {...register("blood")}
+                  >
+                    <option value="a">a+</option>
+                    <option value="b">b+</option>
                     <option value="ab+">ab+</option>
+                    <option value="a">ab-</option>
+                    <option value="b">b-</option>
+                    <option value="ab+">a-</option>
+                    <option value="b">o-</option>
+                    <option value="ab+">o+</option>
                   </select>
                   {errors.blood && (
                     <span className="text-red-600">Blood is required</span>
@@ -138,103 +154,92 @@ const Register = () => {
                   </label>
                   {/* <select className="select select-bordered w-full max-w-xs"> */}
 
-                  <select className="input input-bordered" {...register("district")}>
+                  <select
+                    className="input input-bordered"
+                    {...register("district")}
+                  >
                     <option value="barishal">Barishal</option>
                     <option value="chandpur">Chandpur</option>
                     <option value="chittagonj">Chittagonj</option>
+                    <option value="barishal"> Jhenaidah </option>
+                    <option value="chandpur">Khulna</option>
+                    <option value="chittagonj">Dinajpur</option>
+                    <option value="barishal">Sylhet</option>
+                    <option value="chandpur">Sirajgonj</option>
+                    <option value="chittagonj">Rangpur</option>
                   </select>
                   {errors.district && (
                     <span className="text-red-600">District is required</span>
                   )}
                 </div>
-
-                <div className="form-control">
+                <div className="form-control mr-2">
                   <label className="label">
                     <span className="label-text">Upazila</span>
                   </label>
-                  <input
-                    type="text"
-                    {...register("upazila", { required: true })}
-                    placeholder="upazila"
+                  {/* <select className="select select-bordered w-full max-w-xs"> */}
+
+                  <select
                     className="input input-bordered"
-                  />
-                  {errors.upazilaL && (
+                    {...register("upazila")}
+                  >
+                    <option value="barishal">Babugonj</option>
+                    <option value="chandpur">Chandpur Sadar </option>
+                    <option value="chittagonj"> Banshkhali</option>
+                    <option value="barishal">Kotchandpur</option>
+                    <option value="chandpur">Batiaghata</option>
+                    <option value="chittagonj">Ghoraghat</option>
+                    <option value="barishal">Balaganj</option>
+                    <option value="chandpur">Chowhali</option>
+                    <option value="chittagonj">Gangachara</option>
+                  </select>
+                  {errors.upazila && (
                     <span className="text-red-600">Upazila is required</span>
                   )}
                 </div>
-               
               </div>
-              <div className="flex gap-5 mr-6" >
-
-              {/* <div className="form-control">
+              <div className="flex gap-5 mr-6">
+                <div className="form-control">
                   <label className="label">
-                    <span className="label-text">Date</span>
+                    <span className="label-text">Password</span>
                   </label>
                   <input
-                    type="date"
-                    {...register("date", { required: true })}
-                    placeholder="date"
+                    type="password"
+                    {...register("password", {
+                      required: true,
+                      minLength: 6,
+                      maxLength: 20,
+                      pattern: /(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])/,
+                    })}
+                    placeholder="password"
                     className="input input-bordered"
                   />
-                  {errors.date && (
-                    <span className="text-red-600">Date is required</span>
+                  {errors.password?.type === "required" && (
+                    <p className="text-red-600">Password is required</p>
                   )}
-                </div> */}
-
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
-                <input
-                  type="password"
-                  {...register("password", {
-                    required: true,
-                    minLength: 6,
-                    maxLength: 20,
-                    pattern: /(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])/,
-                  })}
-                  placeholder="password"
-                  className="input input-bordered"
-                />
-                {errors.password?.type === "required" && (
-                  <p className="text-red-600">Password is required</p>
-                )}
-                {errors.password?.type === "minLength" && (
-                  <p className="text-red-600">Password must be 6 characters</p>
-                )}
-                {errors.password?.type === "maxLength" && (
-                  <p className="text-red-600">
-                    Password must be less than 20 characters
-                  </p>
-                )}
-                {errors.password?.type === "pattern" && (
-                  <p className="text-red-600">
-                    Password must have one Uppercase one lower case, one number
-                  </p>
-                )}
-                <label className="label">
-                  <a href="#" className="label-text-alt link link-hover">
-                    Forgot password?
-                  </a>
-                </label>
-              </div>
-              </div>
-              <div>
-              {/* <div className="form-control">
+                  {errors.password?.type === "minLength" && (
+                    <p className="text-red-600">
+                      Password must be 6 characters
+                    </p>
+                  )}
+                  {errors.password?.type === "maxLength" && (
+                    <p className="text-red-600">
+                      Password must be less than 20 characters
+                    </p>
+                  )}
+                  {errors.password?.type === "pattern" && (
+                    <p className="text-red-600">
+                      Password must have one Uppercase one lower case, one
+                      number
+                    </p>
+                  )}
                   <label className="label">
-                    <span className="label-text">Time</span>
+                    <a href="#" className="label-text-alt link link-hover">
+                      Forgot password?
+                    </a>
                   </label>
-                  <input
-                    type="time"
-                    {...register("time", { required: true })}
-                    placeholder="date"
-                    className="input input-bordered"
-                  />
-                  {errors.time && (
-                    <span className="text-red-600">Time is required</span>
-                  )}
-                </div> */}
+                </div>
               </div>
+              <div></div>
 
               <div className="form-control mt-6">
                 <input
@@ -252,6 +257,9 @@ const Register = () => {
                 </Link>
               </small>
             </p>
+            <div className="text-center">
+              <SocialLogin></SocialLogin>
+            </div>
           </div>
         </div>
       </div>
