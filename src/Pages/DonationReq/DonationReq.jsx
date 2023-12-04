@@ -8,6 +8,7 @@ const DonationReq = () => {
   return (
     <div>
       <div>
+        
         <h2 className="text-4xl text-center mt-10 text-red-400">
           All Donation Request : {donation.length}
         </h2>
@@ -50,34 +51,7 @@ const DonationReq = () => {
       </div>
       {donation.map((data) => (
         <div key={data._id} className="">
-          {/* <div classNameName="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1 lg:m-10 lg:ml-[25vh]">
-                         <div classNameName="w-80 p-4 bg-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out ">
-                        <div classNameName="p-4">
-                          <h2 classNameName="text-xl text-red-500  font-semibold">{data.recipe}
-                          </h2>
-                          <p classNameName="text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                            quis ante sit amet tellus ornare tincidunt.
-                          </p>
-                          <div classNameName="flex justify-between items-center mt-4">
-                            <button classNameName="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                             Donation
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      reqname
-reqemail
-recipient
-upazila
-district
-hospital
-address
-date
-time
-status
-                      
-                         </div> */}
+         
           <div>
             {/* <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/riva-dashboard-tailwind/riva-dashboard.css"> */}
             <div>
@@ -92,13 +66,7 @@ status
                               <tr className="border-b border-dashed last:border-b-0">
                                 <td className="p-3 pl-0">
                                   <div className="flex items-center">
-                                    {/* <div className="relative inline-block shrink-0 rounded-2xl me-3">
-                                    <img
-                                      src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/riva-dashboard-tailwind/img/img-49-new.jpg"
-                                      className="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl"
-                                      alt=""
-                                    />
-                                  </div> */}
+                                    
                                     <div className="flex flex-col justify-start">
                                       <a
                                         href="javascript:void(0)"

@@ -1,12 +1,10 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
-// import useAuth from "./useAuth";
-// import { useNavigate } from "react-router-dom";
+
 import useAuth from "./useAuth";
 
  const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5000'
+    baseURL: 'https://last-asgn-server.vercel.app'
 })
 const useAxiosSecure = () => {
     const navigate = useNavigate();
@@ -17,6 +15,7 @@ const useAxiosSecure = () => {
         const token = localStorage.getItem('access-token')
         // console.log('request stopped by interceptors', token)
         config.headers.authorization = `Bearer ${token}`;
+       
         return config;
     }, function (error) {
         // Do something with request error

@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+// import { useEffect, useState } from "react";
+import useAxiosPublic from "./useAxiosPublic";
 
 
 const useDonationReq = () => {
+  const axiosPublic = useAxiosPublic();
 
-    const [donation, setDonation] = useState([]);
-    const [loading,setLoading] = useState(true);
 
-    useEffect(() => {
-      fetch('http://localhost:5000/donations')
-        .then(res => res.json())
-        .then(data => {
-            setDonation(data);
-            setLoading(false);
-        });
-    }, []);
-            return [donation,loading ]
+
+    const {data : donation = [], isPending: loading, refetch} = useQuery({
+      queryKey:['donation'],
+      queryFn: async()=>{
+        const res = await axiosPublic.get('/donations');
+        return res.data
+      }
+    })
+            return [donation,loading ,refetch]
 };
 
 export default useDonationReq;

@@ -6,7 +6,7 @@ const Banner = () => {
       <div
         className="hero min-h-screen"
         style={{
-          backgroundImage: "url(https://i.ibb.co/vY2Zcrs/wbdd-header.jpg)",
+          backgroundImage: "url(https://i.ibb.co/0Fsb62c/360-F-487556637.jpg)",
         }}
       >
         <div className="hero-overlay bg-opacity-60"></div>
@@ -17,9 +17,9 @@ const Banner = () => {
                 Join as a Donor
               </button>
             </Link>
-            <Link to="/register">
+            <Link to="/search">
               <button className="w-[20vh] mr-4 h-12 text-white font-semibold bg-gradient-to-r from-pink-600 via-purple-700 to-indigo-600 rounded-lg shadow-lg hover:scale-105 duration-200 hover:drop-shadow-2xl hover:shadow-[#7dd3fc] hover:cursor-pointer">
-                Join as a Donor
+              Search Donors
               </button>
             </Link>
           </div>

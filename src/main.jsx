@@ -14,16 +14,16 @@ import {
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-
+<div className='max-w-[1400px] mx-auto'>
    <AuthProvider>
    <QueryClientProvider client={queryClient}>
    <HelmetProvider>
-    <div className='max-w-screen- mx-auto'>
+    
         <RouterProvider router={router} />
-      </div>
+      
     </HelmetProvider>
     </QueryClientProvider>
    </AuthProvider>
-    
+   </div>
   </React.StrictMode>,
 )

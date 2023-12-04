@@ -1,5 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Banner from "./Banner/Banner";
+import OurTeam from "./OurTeam/OurTeam";
+import Contact from "./OurTeam/Contact";
 
 
 const Home = () => {
@@ -10,7 +12,10 @@ const Home = () => {
                   </Helmet>
                   <Banner></Banner>
                   <h2 className="text-5xl mt-10 text-center mb-10">
-                        extra section
+                        <OurTeam></OurTeam>
+                  </h2>
+                  <h2 className="text-5xl mt-10 text-center mb-10">
+                        <Contact></Contact>
                   </h2>
             </div>
       );

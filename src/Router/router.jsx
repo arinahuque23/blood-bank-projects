@@ -13,7 +13,12 @@ import Donations from "../Pages/DashboardPage/Donations/Donations";
 import AllUsers from "../Pages/DashboardPage/Donations/AllUsers/AllUsers";
 import CreateDonations from "../Pages/DashboardPage/CreateDonation/CreateDonations";
 import MyDonationRequestDash from "../Pages/DashboardPage/MyDonationRequestDash/MyDonationRequestDash";
-
+import UserDonation from "../Pages/UserDash/UserDonation";
+import UserRequest from "../Pages/DashboardPage/UserRequest/UserRequest";
+import AdminRoute from "../Router/AdminRoute" 
+import UpdateDonation from "../Pages/DashboardPage/UpdateDonation/UpdateDonation";
+import CreateBlogPost from "../Pages/DashboardPage/CreateBlogPost/CreateBlogPost";
+import SearchDonor from "../Pages/SearchDonor/SearchDonor";
 
 export const router = createBrowserRouter([
       {
@@ -40,34 +45,56 @@ export const router = createBrowserRouter([
               {
                 path: "/viewdetails/:id",
                 element:<PrivateRoute><DonationsDetails></DonationsDetails></PrivateRoute> ,
-                loader : ({params}) => fetch(`http://localhost:5000/donations/${params.id}`)
+                loader : ({params}) => fetch(`https://last-asgn-server.vercel.app/donations/${params.id}`)
               },
               {
                 path :"/blog",
                 element: <Blog></Blog>
+              },
+              {
+                path :"/search",
+                element: <PrivateRoute> <SearchDonor></SearchDonor> </PrivateRoute>
               }
             ]
       },
       {
         path : 'dashboard',
-        element : <PrivateRoute> <Dashboard></Dashboard> </PrivateRoute>,
+        element :  <PrivateRoute><Dashboard></Dashboard></PrivateRoute> ,
         children : [
           {
             path : 'donation',
-            element: <Donations></Donations>
+            element: <PrivateRoute><Donations></Donations></PrivateRoute>
+          },
+          {
+            path : 'userHome',
+            element: <PrivateRoute><UserDonation></UserDonation></PrivateRoute>
           },
           {
             path : 'createDonation',
-            element: <CreateDonations></CreateDonations>
+            element: <PrivateRoute><CreateDonations></CreateDonations></PrivateRoute>
+          },
+          {
+            path : 'userRequest',
+            element: <PrivateRoute> <UserRequest></UserRequest> </PrivateRoute>
+          
           },
           {
             path : 'donationRequest',
-            element: <MyDonationRequestDash></MyDonationRequestDash>
+            element: <MyDonationRequestDash></MyDonationRequestDash> //all donation for admin
           },
           //admin
           {
             path : 'users',
             element : <AllUsers></AllUsers>
+          },
+          {
+            path : 'updateItems/:id',
+            element : <UpdateDonation></UpdateDonation> ,
+            loader : ({params}) => fetch(`https://last-asgn-server.vercel.app/donations/${params.id}`)
+          },
+          {
+            path: 'contentManagement',
+            element: <CreateBlogPost></CreateBlogPost>
           }
         ]
       }

@@ -21,33 +21,25 @@ const Dashboard = () => {
                      {
                         isAdmin ? <> 
                             <li>
-                                <NavLink to="/dashboard/adminHome">
+                                <NavLink to="/dashboard/donation">
                                     <FaHome></FaHome>
                                     Admin Home</NavLink>
                             </li> 
-                            <li>
-                                <NavLink to="/dashboard/addDonation">
-                                    <FaUtensils></FaUtensils>
-                                    Add Donation</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/manageDonation">
-                                    <FaList></FaList>
-                                    Manage Donation</NavLink>
-                            </li>
+                            
+                          
                             <li>
                                 <NavLink to="/dashboard/users">
                                     <FaUsers></FaUsers>
                                     All Users </NavLink>
                             </li>
                             <li>
-                                <NavLink className="mt-2" to="/">
+                                <NavLink className="mt-2" to="/dashboard/donationRequest">
                                     <FaBlog></FaBlog>
                                     All Blood Donation Request </NavLink>
                             </li>
                             <li>
                                 <NavLink className="mt-2"
-                                 to="/">
+                                 to="/dashboard/contentManagement">
                                     <FaBook></FaBook>
                                     Conatent Management  </NavLink>
                             </li>
@@ -55,7 +47,7 @@ const Dashboard = () => {
                             : 
                             <>
                                 <li>
-                                    <NavLink to="/dashboard/donation">
+                                    <NavLink to="/dashboard/userHome">
                                         <FaHome></FaHome>
                                         User Home</NavLink>
                                 </li> 
@@ -68,7 +60,7 @@ const Dashboard = () => {
                                         Create Donation Request</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/dashboard/donationRequest">
+                                    <NavLink to="/dashboard/userRequest">
                                         <FaList></FaList>
                                         My Donation Request</NavLink>
                                 </li>

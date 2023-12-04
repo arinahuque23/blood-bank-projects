@@ -8,6 +8,12 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 
+
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+
+const image_hosting_api=`https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+
+
 const Register = () => {
   const axiosPublic = useAxiosPublic();
   const {
@@ -19,37 +25,54 @@ const Register = () => {
   const { createUser, updateUserProfile } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
+  const onSubmit =async (data) => {
     console.log(data);
-    createUser(data.email, data.password).then((result) => {
-      const loggedUser = result.user;
-      console.log(loggedUser);
-      updateUserProfile(data.name, data.photoURL, data.blood, data.district)
-        .then(() => {
-          // create user entry in the database
-          const userInfo = {
-            name: data.name,
-            email: data.email,
-            blood: data.blood,
-          };
-          axiosPublic.post("/users", userInfo).then((res) => {
-            if (res.data.insertedId) {
-              console.log("user added to the database");
-              reset();
-              Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "User created successfully.",
-                showConfirmButton: false,
-                timer: 1500,
-              });
-              navigate("/");
-            }
-          });
-        })
-
-        .catch((error) => console.log(error));
+    const imageFile = { image: data.image[0] }
+    const res = await axiosPublic.post(image_hosting_api,imageFile, {
+      headers: {
+          'content-type': 'multipart/form-data'
+      }
     });
+    if(res.data.success){
+      const image = res.data.data.display_url
+      createUser(data.email, data.password).then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+        
+        updateUserProfile(data.name,image)
+          .then(() => {
+            // create user entry in the database
+            const userInfo = {
+              name: data.name,
+              email: data.email,
+              image,
+              blood: data.blood,
+              district: data.district,
+              upazila:data.upazila,
+              status:"active"
+            };
+            axiosPublic.post("/users", userInfo).then((res) => {
+              if (res.data.insertedId) {
+                console.log("user added to the database");
+                reset();
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "User created successfully.",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                navigate("/");
+              }
+            });
+          })
+  
+          .catch((error) => console.log(error));
+      });
+    }
+    console.log(res.data);
+
+   
   };
 
   return (
@@ -70,14 +93,31 @@ const Register = () => {
               />
             </div>
           </div>
-          <div className="card mb-5 flex-shrink-0 mt-5 w-[69vh]  border ">
+          <div className="card mb-5 mx-1 flex-shrink-0 mt-5 w-[330px] md:w-[450px]  border ">
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-              <div className="flex ">
+              <div>
+              <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Photo Upload </span>
+                  </label>
+                  
+                  <input type="file" className="file-input file-input-bordered file-input-info w-full max-w-xs"
+                   name="photo"
+                   {...register("image", { required: true })}
+                   placeholder="Photo URL"
+                  />
+                  {errors.image && (
+                    <span className="text-red-600">Photo URL is required</span>
+                  )}
+                </div>
+              </div>
+              <div className="lg:flex ">
                 <div className="form-control mr-2">
                   <label className="label">
                     <span className="label-text">Name</span>
                   </label>
                   <input
+            
                     type="text"
                     {...register("name", { required: true })}
                     name="name"
@@ -88,24 +128,10 @@ const Register = () => {
                     <span className="text-red-600">Name is required</span>
                   )}
                 </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Photo URL</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="photo"
-                    {...register("photoURL", { required: true })}
-                    placeholder="Photo URL"
-                    className="input input-bordered"
-                  />
-                  {errors.photoURL && (
-                    <span className="text-red-600">Photo URL is required</span>
-                  )}
-                </div>
+               
               </div>
               {/*2nd form */}
-              <div className="flex">
+              <div className="lg:flex">
                 <div className="form-control mr-2">
                   <label className="label">
                     <span className="label-text">Email</span>
@@ -147,7 +173,7 @@ const Register = () => {
                 </div>
               </div>
               {/*3rd form */}
-              <div className="flex">
+              <div className="lg:flex">
                 <div className="form-control mr-2">
                   <label className="label">
                     <span className="label-text">District</span>
